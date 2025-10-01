@@ -11,11 +11,26 @@ dotenv.config();
 
 const app = express();
 
-// CORS : en dev on autorise le front local (Vite: http://localhost:5173) ou tout si non précisé
-const allowedOrigin = process.env.FRONTEND_URL || "*";
-app.use(cors({
-  origin: allowedOrigin,
-}));
+// CORS : autoriser à la fois le front en local et le déploiement Vercel
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  "http://localhost:5173",
+  "http://localhost:3000",
+  "https://savin-jessica.vercel.app",
+].filter(Boolean);
+
+app.use(
+  cors({
+    origin(origin, callback) {
+      // Autoriser les outils sans origin (Postman) et les origines listées
+      const isVercelPreview = typeof origin === "string" && origin.endsWith(".vercel.app");
+      if (!origin || allowedOrigins.includes(origin) || isVercelPreview) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
+  })
+);
 
 app.use(express.json()); 
 

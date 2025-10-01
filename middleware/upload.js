@@ -16,7 +16,7 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: "savinjessica", // dossier Cloudinary
+    folder: "savinjessica",
     allowed_formats: ["jpg", "png", "jpeg", "webp"],
   },
 });
