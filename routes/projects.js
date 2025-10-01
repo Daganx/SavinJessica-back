@@ -2,8 +2,21 @@
 import express from "express";
 import Project from "../models/Project.js";
 import authMiddleware from "../middleware/authMiddleware.js";
+import upload from "../middleware/upload.js";
 
 const router = express.Router();
+
+// POST /api/projects/upload -> upload image (Cloudinary via Multer)
+router.post("/upload", authMiddleware, upload.single("image"), (req, res) => {
+  try {
+    if (!req.file?.path) {
+      return res.status(400).json({ error: "Aucun fichier reçu" });
+    }
+    return res.json({ url: req.file.path });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
 
 // GET /api/projects  -> lister tous les projets (public)
 router.get("/", async (req, res) => {
