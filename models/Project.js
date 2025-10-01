@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 const projectSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: String,
+  prestation: String,
   images: { type: [String], default: [] }, // tableau d'URLs
   customer: String,
   year: String,

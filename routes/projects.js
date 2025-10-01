@@ -59,6 +59,7 @@ router.post("/", authMiddleware, async (req, res) => {
     const {
       title,
       description,
+      prestation,
       images = [],
       customer,
       year,
@@ -72,6 +73,7 @@ router.post("/", authMiddleware, async (req, res) => {
     const newProject = new Project({
       title,
       description,
+      prestation,
       images,
       customer,
       year,
