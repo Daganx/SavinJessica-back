@@ -18,6 +18,20 @@ router.post("/upload", authMiddleware, upload.single("image"), (req, res) => {
   }
 });
 
+// POST /api/projects/upload/multiple -> upload plusieurs images
+router.post("/upload/multiple", authMiddleware, upload.array("images", 10), (req, res) => {
+  try {
+    const files = req.files || [];
+    if (!files.length) {
+      return res.status(400).json({ error: "Aucun fichier reçu" });
+    }
+    const urls = files.map((f) => f.path);
+    return res.json({ urls });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
 // GET /api/projects  -> lister tous les projets (public)
 router.get("/", async (req, res) => {
   try {
