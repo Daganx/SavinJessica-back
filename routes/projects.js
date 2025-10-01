@@ -116,8 +116,8 @@ router.delete("/:id", authMiddleware, async (req, res) => {
     // Option : restreindre la suppression au créateur
     // if (project.createdBy?.toString() !== req.userId) return res.status(403).json({ error: "Non autorisé" });
 
-    await project.remove();
-    res.json({ message: "Projet supprimé" });
+    await Project.findByIdAndDelete(req.params.id);
+    return res.json({ message: "Projet supprimé" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
