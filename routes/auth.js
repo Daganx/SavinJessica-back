@@ -5,26 +5,6 @@ import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
 const router = express.Router();
-
-// Register (utiliser une fois pour créer l'admin)
-router.post("/register", async (req, res) => {
-  try {
-    const { username, password } = req.body;
-    if (!username || !password) return res.status(400).json({ error: "username et password requis" });
-
-    const existing = await User.findOne({ username });
-    if (existing) return res.status(400).json({ error: "Utilisateur déjà existant" });
-
-    const hashed = await bcrypt.hash(password, 10);
-    const user = new User({ username, password: hashed });
-    await user.save();
-
-    res.json({ message: "Utilisateur créé" });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
 // Login
 router.post("/login", async (req, res) => {
   try {

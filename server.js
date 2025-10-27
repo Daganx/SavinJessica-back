@@ -17,6 +17,8 @@ const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
   "https://savin-jessica.vercel.app",
+  "https://www.jessicasavin-decoration.fr",
+  "https://jessicasavin-decoration.fr"
 ].filter(Boolean);
 
 app.use(
